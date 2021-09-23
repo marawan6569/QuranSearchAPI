@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="ar">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        .search-form{
+            display: grid;
+            margin: auto;
+            padding: 10px;
+            height: 100px;
+            width: 500px;
+            border: 2px solid #222;
+        }
+        .search-input{
+            padding: 10px;
+            border: 2px solid cadetblue;
+        }
+        .submit{
+            padding: 10px;
+            width: 30%;
+            margin: auto;
+            margin-bottom: 5px;
+        }
+        .controls {
+            margin: auto;
+            width: 500px;
+            height: 40px;
+            padding: 10px;
+            border: 2px solid #222;
+            border-top: 2px solid #e8dcdf;
+        }
+        .controls input{
+            padding: 10px;
+            border-radius: 50%;
+            height: 40px;
+            width: 40px;
+            cursor: pointer;
+            {#font-size: larger;#}
+            {#line-height: 2px;#}
+            {#text-align: end;#}
+        }
+        .ayah{
+            direction: rtl;
+        }
+        .ayah span{
+            color: dimgrey;
+        }
+        .ayah-audio{
+            height: 40px;
+            width: 40px;
+            border: 1px solid #222;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<form class="search-form" action="{% url 'search:searchByWords' %}" method="post">
+    {% csrf_token %}
+    <input class="search-input" type="text" name="ayah" id="ayah">
+    <br>
+    <input class="submit" type="submit" value="search">
+</form>
+<div class="controls">
+    <input type="button" value="<<">
+    <input type="button" value="▶">
+    <input type="button" value=">>">
+</div>
+
+{% for verse in verses %}
+        <div>
+            <h4 class="ayah">
+                {{ verse.verse }}
+                <span>
+                    ({{ verse.numberInSurah }})|({{ verse.numberInQuran }})
+                </span>
+            </h4>
+            <div class="ayah-audio" data-audioSource="{{ verse.audio }}">▶</div>
+       </div>
+    <hr>
+{% endfor %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>
+    $('.ayah-audio').click(function (){
+        console.log('test')
+        source = $(this).attr('data-audioSource');
+        {#$(this).text('⏸')#}
+        const audio = new Audio(source);
+        audio.play();
+    });
+</script>
+
+</body>
+</html>
