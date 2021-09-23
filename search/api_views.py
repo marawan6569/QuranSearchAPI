@@ -76,8 +76,23 @@ def get_range_of_verses_api(request, start, end) -> int:
 
 @api_view(['GET'])
 def verse_starts_with(request, litters) -> str:
+    """
+        it takes one str argument and take copy of it and add space to
+        first of it because there was an bug in DB in field
+        verseWithoutTashkeel if the verse was a start of hizb Quarter
+        i removed hizb quarter sign but i found that there was a space between
+        hizb quarter sign and the verse, that means some verses start with space not
+        litter, if i updated DB i will edit this words
+        --------------------who it works?---------------------
+        take argument litters and check if verse or verseWithoutTshkeel starts with it
+        or versesWithoutTshkeel starts with littersWithSpace
+    """
+    littersWithSpace = f' {litters}'
     verse = Verses.objects.filter(
-        Q(verse__startswith=litters) | Q(verseWithoutTashkeel__startswith=litters)
+        Q(verse__startswith=litters) |
+        Q(verseWithoutTashkeel__startswith=litters) |
+        Q(verseWithoutTashkeel__startswith=littersWithSpace)
+
     )
 
     data = VersesSerializers(verse, many=True).data
