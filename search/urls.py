@@ -14,6 +14,6 @@ urlpatterns = [
     path('api/getVerse/<int:surahId>/<int:verseNum>', get_verse_api, name='getVerseAPI'),
     path('api/getRangeOfVerses/<int:start>/<int:end>', get_range_of_verses_api, name='getRangeOfVerses'),
     path('api/magicSearch/verseStartsWith/<str:litters>', verse_starts_with, name='verseStartsWithAPI'),
-    # path('api/magicSearch/verseStartsWith/<str:litters>', verse_starts_with, name='verseStartsWithAPI'),
+    path('api/magicSearch/verseEndsWith/<str:litters>', verse_ends_with, name='verseEndsWithAPI'),
 
 ]

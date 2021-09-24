@@ -98,3 +98,21 @@ def verse_starts_with(request, litters) -> str:
     data = VersesSerializers(verse, many=True).data
     return Response({'resultLength': len(data), 'data': data})
 
+
+@api_view(['GET'])
+def verse_ends_with(request, litters) -> str:
+    """
+        it takes one str argument and make copy of it and add to the copy
+        space to the end to avoid the bug in verse_starts_with
+        and then check verses if verse ends with the given litters
+    """
+    littersWithSpace = f'{litters} '
+    verses = Verses.objects.filter(
+        Q(verse__endswith=litters) |
+        Q(verseWithoutTashkeel__endswith=litters)|
+        Q(verseWithoutTashkeel__endswith=littersWithSpace)
+    )
+    data = VersesSerializers(verses, many=True).data
+    return Response({'resultLength': len(data), 'data': data})
+
+
