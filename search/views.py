@@ -27,3 +27,6 @@ def getSurah(request, id):
     )
     verses = {'verses': surah}
     return render(request, 'search/search.html', verses)
+
+def api_docs(request):
+    return render(request, 'search/api.html')

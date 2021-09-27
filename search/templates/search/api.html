@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>api docs</title>
+    <style>
+        .container{
+            padding: 10px;
+            background-color: #EEE;
+        }
+        .container .row{
+            padding: 10px;
+            border: 1px solid #222;
+            margin-bottom: 3px;
+        }
+        .container .row p{
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="row">
+            <a href="/api/allVerses">
+                https://quran-search-api.herokuapp.com/api/allVerses
+            </a>
+            <p>
+                returns all verses
+            </p>
+        </div>
+
+
+
+        <div class="row">
+            <a href="/api/search/قيوم">
+                https://quran-search-api.herokuapp.com/api/search/{keywords}
+            </a>
+            <p>
+                takes string and then return all verses that contains this string
+            </p>
+        </div>
+
+
+        <div class="row">
+            <a href="/api/getSurah/1">
+                https://quran-search-api.herokuapp.com/api/getSurah/{surah_id}
+            </a>
+            <p>
+                <ul>
+                    <li>takes surah number and then returns all verses in this surah</li>
+                    <li>surahs numbers is between 1 and 114</li>
+                </ul>
+            </p>
+
+        </div>
+
+        <div class="row">
+            <a href="/api/getVerse/1/1">
+                https://quran-search-api.herokuapp.com/api/getVerse/{surah_id}/{verse_number}
+            </a>
+            <p>
+                Returns specific verse by taking
+                <ul>
+                    <li>surah number</li>
+                    <li>verse number</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="row">
+            <a href="/api/getRangeOfVerses/1/10">
+                https://quran-search-api.herokuapp.com/api/getRangeOfVerses/{start}/{end}
+            </a>
+            <p>
+                Returns range of verses by taking:
+                <ul>
+                    <li>start: where verses will start</li>
+                    <li>end: where verses will end</li>
+                    <li>verses in quran starts from 1 to 6236</li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="row">
+            <a href="/api/magicSearch/verseStartsWith/د">
+                https://quran-search-api.herokuapp.com/api/magicSearch/verseStartsWith/{letters}
+            </a>
+            <p>
+                takes one letter or more and then returns all verses that starts with this letters
+            </p>
+        </div>
+
+        <div class="row">
+            <a href="/api/magicSearch/verseEndsWith/ض">
+                https://quran-search-api.herokuapp.com/api/magicSearch/verseEndsWith/{letters}
+            </a>
+            <p>
+                takes one letter or more and then returns all verses that ends with this letters
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
