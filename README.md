@@ -110,3 +110,9 @@ search API for quran
     ]
 }
 ```
+---
+---
+## Note :
+- you can return data as json object by addind **"?format=json"** to the end of URL:
+
+        ex "https://quran-search-api.herokuapp.com/api/search/قيوم?format=json
