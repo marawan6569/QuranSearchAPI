@@ -3,20 +3,39 @@ from django.db import models
 # Create your models here.
 
 class Verses(models.Model):
-    verse_pk = models.CharField(max_length=8, null=False, blank=False, unique=True, verbose_name='Verse primary key')
-    page = models.PositiveIntegerField(null=False, blank=False, verbose_name='Page Number')
-    hizbQuarter = models.PositiveIntegerField(null=False, blank=False, verbose_name='Hizb Quarter Number')
-    juz = models.PositiveIntegerField(null=False, blank=False, verbose_name='Juz Number')
-    verse = models.CharField(max_length=5000, null=False, blank=False, verbose_name='Verse')
-    verseWithoutTashkeel = models.CharField(max_length=1000, null=False, blank=False, verbose_name='Verse Without Tashkeel')
-    numberInSurah = models.PositiveIntegerField(null=False, blank=False, verbose_name='Verse number in Surah')
-    numberInQuran = models.PositiveIntegerField(null=False, blank=False, unique=True, verbose_name='Verse number in Quran')
-    audio = models.URLField(null=False, blank=False, unique=True, verbose_name='Audio primary source')
-    audio1 = models.URLField(null=True, blank=True, unique=True, verbose_name='Audio 1st secondary source')
-    audio2 = models.URLField(null=True, blank=True, unique=True, verbose_name='Audio 2nd secondary source')
-    sajda = models.BooleanField(verbose_name='Is Verse sajda')
+    verse_pk = models.CharField(max_length=8, null=False, blank=False, unique=True, verbose_name='مفتاح الأية')
+    page = models.PositiveIntegerField(null=False, blank=False, verbose_name='الصفحة')
+    hizbQuarter = models.PositiveIntegerField(null=False, blank=False, verbose_name='الربع')
+    juz = models.PositiveIntegerField(null=False, blank=False, verbose_name='الجزء')
+    # surah = models.IntegerField(null=True, blank=True, verbose_name='السورة')
+    surah = models.ForeignKey('Surah', on_delete=models.CASCADE, null=True, blank=True, related_name='surah', verbose_name='السورة')
+    verse = models.CharField(max_length=5000, null=False, blank=False, verbose_name='الأية')
+    verseWithoutTashkeel = models.CharField(max_length=1000, null=False, blank=False, verbose_name='الأية بدون تشكيل')
+    numberInSurah = models.PositiveIntegerField(null=False, blank=False, verbose_name='رقم الأية في السورة')
+    numberInQuran = models.PositiveIntegerField(null=False, blank=False, unique=True, verbose_name='رقم الأية في القرءان')
+    audio = models.URLField(null=False, blank=False, unique=True, verbose_name='مصدر تلاوة أساسي')
+    audio1 = models.URLField(null=True, blank=True, unique=True, verbose_name='مصدر تلاوة ثانوي 1')
+    audio2 = models.URLField(null=True, blank=True, unique=True, verbose_name='مصدر تلاوة ثانوي 2')
+    sajda = models.BooleanField(verbose_name='هل الأية تحتوي علي سجدة')
 
     class Meta:
-        ordering = ['verse_pk']
+        ordering = ['id']
+        verbose_name = 'أية'
+        verbose_name_plural = 'الأيات'
     def __str__(self):
         return self.verse[:50]
+
+class Surah(models.Model):
+    name = models.CharField(max_length=50, verbose_name="اسم السورة")
+    nameWithoutTashkeel = models.CharField(max_length=30, verbose_name="اسم السورة بدون تشكيل")
+
+    class Meta:
+        ordering = ['id']
+        verbose_name = 'سورة'
+        verbose_name_plural = 'السور'
+    def __str__(self):
+        return self.name
+
+
+#search_surah
+#search_verses

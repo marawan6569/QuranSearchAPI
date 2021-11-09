@@ -77,21 +77,11 @@ def get_range_of_verses_api(request, start, end) -> int:
 @api_view(['GET'])
 def verse_starts_with(request, letters) -> str:
     """
-        it takes one str argument and take copy of it and add space to
-        first of it because there was an bug in DB in field
-        verseWithoutTashkeel if the verse was a start of hizb Quarter
-        i removed hizb quarter sign but i found that there was a space between
-        hizb quarter sign and the verse, that means some verses start with space not
-        letter, if i updated DB i will edit this words
-        --------------------who it works?---------------------
-        take argument letters and check if verse or verseWithoutTshkeel starts with it
-        or versesWithoutTshkeel starts with littersWithSpace
+     it takes one str argument and then check verses if verse starts with the given letters
     """
-    lettersWithSpace = f' {letters}'
     verse = Verses.objects.filter(
         Q(verse__startswith=letters) |
-        Q(verseWithoutTashkeel__startswith=letters) |
-        Q(verseWithoutTashkeel__startswith=lettersWithSpace)
+        Q(verseWithoutTashkeel__startswith=letters)
 
     )
 
@@ -102,15 +92,11 @@ def verse_starts_with(request, letters) -> str:
 @api_view(['GET'])
 def verse_ends_with(request, letters) -> str:
     """
-        it takes one str argument and make copy of it and add to the copy
-        space to the end to avoid the bug in verse_starts_with
-        and then check verses if verse ends with the given letters
+        it takes one str argument and then check verses if verse ends with the given letters
     """
-    lettersWithSpace = f'{letters} '
     verses = Verses.objects.filter(
         Q(verse__endswith=letters) |
-        Q(verseWithoutTashkeel__endswith=letters) |
-        Q(verseWithoutTashkeel__endswith=lettersWithSpace)
+        Q(verseWithoutTashkeel__endswith=letters)
     )
     data = VersesSerializers(verses, many=True).data
     return Response({'resultLength': len(data), 'data': data})

@@ -4,6 +4,10 @@ from rest_framework import serializers
 from .models import Verses
 
 class VersesSerializers(serializers.ModelSerializer):
+
+    # surah = serializers.SerializerMethodField(source='get_surah_name')
+    surah = serializers.StringRelatedField()
+
     class Meta:
         model = Verses
         fields = [
@@ -11,6 +15,7 @@ class VersesSerializers(serializers.ModelSerializer):
             'page',
             'hizbQuarter',
             'juz',
+            'surah',
             'verse',
             'verseWithoutTashkeel',
             'numberInSurah',
